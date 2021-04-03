@@ -3,16 +3,19 @@ import React, { Component } from 'react';
 
 class Question extends Component{
     state = {
-        people: {'Jenny':'','Jackie':'','Sydney':'','Lisa':'','Robert':'','Mark':'','Tom':''}
+        people: {'Jenny':'','Jackie':'','Sydney':'','Lisa':'','Robert':'','Mark':'','Tom':''},
+        className: 'btn btn-outline-info'
     };
     constructor(){
         super();
         this.createQuestion.bind(this);
         this.processChoice.bind(this);
     }
-    processChoice= (clickedPerson) =>{
-        if (clickedPerson===this.props.value){
-            this.props.answer = true;
+    processChoice= (choice) =>{
+        if (choice===this.props.value){
+            this.setState({className:'btn btn-success'});
+        }else{
+            this.setState({className:'btn btn-danger'});
         }
     }
 
@@ -56,7 +59,8 @@ class Question extends Component{
             <img class="card-img-top" src={this.props.img} alt="Card image cap"></img>
             <div class="card-body btn-group-vertical">
                 <h5 class="card-title">Who is this?</h5>
-                {quizoptions.map(option => <button onclick={(option)=> this.props.onAnswer(option,this.props.id)} className= "btn btn-outline-info" data-toggle="buttons" autocomplete="off" key = {option}>{option}</button>)}
+                {quizoptions.map(option => <button onclick={(option)=> this.processChoice()} className={this.state.className} data-toggle="buttons" autocomplete="off" key = {option}>{option}</button>)}
+                {/* {(option)=>this.props.onAnswer(option,this.props.id)}*/}
             </div>
             </div>);} 
 
